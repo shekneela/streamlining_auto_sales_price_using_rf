@@ -10,12 +10,15 @@ inputs:
   n_estimators:
     type: integer
     default: 100
+    optional: true 
   max_depth:
     type: integer
     default: 5
+    optional: true 
   criterion:               
     type: string
     default: squared_error
+    optional: true 
 outputs:
   model_output:
     type: mlflow_model
