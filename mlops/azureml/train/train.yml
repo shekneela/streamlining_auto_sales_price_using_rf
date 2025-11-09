@@ -18,10 +18,11 @@ outputs:
     type: mlflow_model
 code: ../../../data-science/src
 command: >
-  python train.py 
-  --train_data ${{inputs.train_data}} 
-  --test_data ${{inputs.test_data}} 
-  --model_output ${{outputs.model_output}} 
-  --n_estimators ${{inputs.n_estimators}} 
+  python train.py
+  --train_data ${{inputs.train_data}}
+  --test_data ${{inputs.test_data}}
+  --model_output ${{outputs.model_output}}
+  --n_estimators ${{inputs.n_estimators}}
   --max_depth ${{inputs.max_depth}}
+  --criterion ${{inputs.criterion}}
 environment: azureml:used-crs-sales-train-env@latest
