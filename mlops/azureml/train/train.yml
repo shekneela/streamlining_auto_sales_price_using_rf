@@ -21,7 +21,8 @@ command: >-
   python train.py 
   --train_data ${{inputs.train_data}}
   --test_data ${{inputs.test_data}}
-  --criterion ${{inputs.criterion}}
+  ---model_output ${{outputs.model_output}}
+   --n-estimator ${inputs.n-estimator}}
   --max_depth ${{inputs.max_depth}}
-  --model_output ${{outputs.model_output}}
+ 
 environment: azureml:used-crs-sales-train-env@latest
