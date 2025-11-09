@@ -40,15 +40,15 @@ jobs:
     name: sweep_job
     display_name: sweep-job
     type: sweep
+    trial: azureml:train_model@latest   # ✅ registered component
     inputs:
       train_data: ${{parent.jobs.prep_data.outputs.train_data}}
-      test_data: ${{parent.jobs.prep_data.outputs.test_data}}
+      test_data:  ${{parent.jobs.prep_data.outputs.test_data}}
     outputs:
       model_output:
         type: mlflow_model
     sampling_algorithm: random
-    trial: azureml:train_model@latest  # ✅ Use registered train_model component
-   search_space:
+    search_space:                      # ✅ FIXED INDENTATION HERE
       n_estimators:
         type: choice
         values: [100, 200, 300]
@@ -60,7 +60,7 @@ jobs:
         values: ["squared_error", "absolute_error", "friedman_mse"]
     objective:
       goal: maximize
-      primary_metric: r2  # ✅ regression metric
+      primary_metric: r2
     limits:
       max_total_trials: 20
       max_concurrent_trials: 10
