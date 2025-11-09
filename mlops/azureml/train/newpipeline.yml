@@ -48,7 +48,7 @@ jobs:
       model_output:
         type: mlflow_model
     sampling_algorithm: random
-    trial: train_model@latest  # Refers to a separate command component
+    trial: azureml:train_model@latest  # Refers to a separate command component
     search_space:
       criterion:
         type: choice
