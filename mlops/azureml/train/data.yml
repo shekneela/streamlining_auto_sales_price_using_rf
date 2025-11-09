@@ -1,6 +1,5 @@
 $schema: https://azuremlschemas.azureedge.net/latest/data.schema.json
-
 type: uri_file
 name: used-cars-dataset
-description: A dataset of pima diabetes prediction
+description: A data set of used cars with prices
 path: ../../../data/used_cars.csv
