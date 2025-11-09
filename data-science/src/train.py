@@ -105,4 +105,7 @@ if __name__ == "__main__":
     parser.add_argument("--max_depth", type=int, default=None)
     parser.add_argument("--criterion", type=str, default="squared_error")
     args = parser.parse_args()
+    args.n_estimators = int(args.n_estimators)
+    args.max_depth = int(args.max_depth) if args.max_depth not in [None, "None", ""] else None
+    args.criterion = str(args.criterion)
     main(args)
