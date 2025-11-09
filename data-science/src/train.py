@@ -42,9 +42,7 @@ def main(args):
         ]
     )
 
-    # backward-compatible criterion mapping
-    valid_criteria = {"squared_error": "mse", "absolute_error": "mae"}
-    criterion = valid_criteria.get(args.criterion, args.criterion)
+    criterion = args.criterion
 
     rf = RandomForestRegressor(
         n_estimators=int(args.n_estimators),
