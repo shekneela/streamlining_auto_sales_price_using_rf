@@ -49,7 +49,35 @@ jobs:
       
     secrets:
       creds: ${{secrets.AZURE_CREDENTIALS}}
-  
+   # 🟦 NEW STEP — Register the train_model component
+  register-train-component:
+    needs: [get-config, register-environment]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Azure CLI
+        uses: azure/setup-azure@v3
+
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Install Azure ML CLI v2
+        run: |
+          az extension add -n ml -y || az extension update -n ml
+
+      - name: Register train_model component
+        run: |
+          echo "Registering train_model component..."
+          az ml component create \
+            --file mlops/azureml/train/train.yml \
+            --resource-group ${{ needs.get-config.outputs.resource_group }} \
+            --workspace-name ${{ needs.get-config.outputs.aml_workspace }}
+          echo "✅ train_model component registered successfully."
+
   register-environment:
       needs: get-config
       uses: ./.github/workflows/custom-register-environment.yml
