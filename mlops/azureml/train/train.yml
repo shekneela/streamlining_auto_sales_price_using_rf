@@ -22,7 +22,7 @@ command: >-
   --train_data ${{inputs.train_data}}
   --test_data ${{inputs.test_data}}
   --model_output ${{outputs.model_output}}
-  --n-estimators ${{inputs.n-estimators}}
+  --n_estimators ${{inputs.n_estimators}}
   --max_depth ${{inputs.max_depth}}
 
 environment: azureml:used-crs-sales-train-env@latest
