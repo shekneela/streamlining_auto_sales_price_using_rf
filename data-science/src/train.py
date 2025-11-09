@@ -30,21 +30,15 @@ def main(args):
 
     X_train = train_df[feature_cols]
     y_train = train_df[target_col]
-
     X_test = test_df[feature_cols]
     y_test = test_df[target_col]
 
-    # Feature engineering: define categorical and numeric columns
+    # Feature engineering
     categorical_features = ["Segment"]
     numeric_features = [c for c in feature_cols if c != "Segment"]
 
-    numeric_transformer = Pipeline(steps=[
-        ("scaler", StandardScaler())
-    ])
-
-    categorical_transformer = Pipeline(steps=[
-        ("onehot", OneHotEncoder(handle_unknown="ignore"))
-    ])
+    numeric_transformer = Pipeline(steps=[("scaler", StandardScaler())])
+    categorical_transformer = Pipeline(steps=[("onehot", OneHotEncoder(handle_unknown="ignore"))])
 
     preprocessor = ColumnTransformer(
         transformers=[
@@ -57,6 +51,7 @@ def main(args):
     rf = RandomForestRegressor(
         n_estimators=args.n_estimators,
         max_depth=args.max_depth,
+        criterion=args.criterion,
         random_state=42,
         n_jobs=-1,
     )
@@ -70,7 +65,7 @@ def main(args):
     # Train
     model_pipeline.fit(X_train, y_train)
 
-    # Predict and evaluate
+    # Evaluate
     y_pred = model_pipeline.predict(X_test)
     mae = mean_absolute_error(y_test, y_pred)
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
@@ -83,6 +78,7 @@ def main(args):
     # Log parameters and metrics
     mlflow.log_param("n_estimators", args.n_estimators)
     mlflow.log_param("max_depth", args.max_depth)
+    mlflow.log_param("criterion", args.criterion)
     mlflow.log_metric("mae", mae)
     mlflow.log_metric("rmse", rmse)
     mlflow.log_metric("r2", r2)
@@ -92,9 +88,7 @@ def main(args):
     model_path = os.path.join(args.model_output, "model.joblib")
     joblib.dump(model_pipeline, model_path)
 
-    # Log model to MLflow
     mlflow.sklearn.log_model(model_pipeline, "model")
-
     mlflow.end_run()
 
 
@@ -105,5 +99,6 @@ if __name__ == "__main__":
     parser.add_argument("--model_output", type=str, required=True)
     parser.add_argument("--n_estimators", type=int, default=200)
     parser.add_argument("--max_depth", type=int, default=None)
+    parser.add_argument("--criterion", type=str, default="squared_error")
     args = parser.parse_args()
     main(args)
