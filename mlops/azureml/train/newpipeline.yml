@@ -1,13 +1,13 @@
 $schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
 type: pipeline
-display_name: random_forest_training_pupeline
-experiment_name: used_cars_sales_predcition
+display_name: random_forest_training_pipeline
+experiment_name: used_cars_sales_prediction
 description: Training Pipeline to predict used cars prices
 
 inputs:
   input:
     type: uri_file
-    path: used-cars-dataset@latest
+    path: azureml:used-cars-dataset@latest
 
 outputs:
   train_data:
@@ -24,12 +24,11 @@ jobs:
     name: prep_data
     display_name: prep-data
     code: ../../../data-science/src
-    command: >-
+    command: >
       python prep.py 
       --input_data ${{inputs.raw_data}} 
-      --train_output ${{outputs.train_data}}
+      --train_output ${{outputs.train_data}} 
       --test_output ${{outputs.test_data}}
-    
     environment: azureml:used-crs-sales-train-env@latest
     inputs:
       raw_data: ${{parent.inputs.input}}
@@ -48,28 +47,30 @@ jobs:
       model_output:
         type: mlflow_model
     sampling_algorithm: random
-    trial: ./train.yml  # Refers to a separate command component  
+    trial: azureml:train_model@latest  # ✅ Use registered train_model component
     search_space:
       criterion:
         type: choice
-        values: ["gini", "entropy"]
+        values: ["squared_error", "absolute_error", "friedman_mse"]
       max_depth:
         type: choice
-        values: [1,3,5,10]
+        values: [1, 3, 5, 10]
+      n_estimators:
+        type: choice
+        values: [100, 200, 300]
     objective:
       goal: maximize
-      primary_metric: r2_score
+      primary_metric: r2_score   # ✅ regression metric
     limits:
       max_total_trials: 20
       max_concurrent_trials: 10
       timeout: 7200
 
-
   register_model:
     name: register_model
     display_name: register-model
     code: ../../../data-science/src
-    command: >-
+    command: >
       python register.py 
       --model_name ${{inputs.model_name}} 
       --model_path ${{inputs.model_path}} 
