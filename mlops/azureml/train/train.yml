@@ -8,17 +8,14 @@ inputs:
   test_data:
     type: uri_folder
   n_estimators:
-    type: number
-    default: 100
-    optional: true 
-  max_depth:
-    type: number
-    default: 5
-    optional: true 
-  criterion:               
     type: string
-    default: squared_error
-    optional: true 
+    default: "100"
+  max_depth:
+    type: string
+    default: "5"
+  criterion:
+    type: string
+    default: "squared_error"
 outputs:
   model_output:
     type: mlflow_model
