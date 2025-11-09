@@ -17,7 +17,7 @@ outputs:
   model_output:
     type: mlflow_model
 code: ../../../data-science/src
-command: >
+command: >-
   python train.py
   --train_data ${{inputs.train_data}}
   --test_data ${{inputs.test_data}}
