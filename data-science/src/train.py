@@ -22,7 +22,7 @@ def main(args):
     train_df = load_data(args.train_data, "train.csv")
     test_df = load_data(args.test_data, "test.csv")
 
-    target_col = "Price"
+    target_col = "price"
     feature_cols = [c for c in train_df.columns if c != target_col]
 
     X_train = train_df[feature_cols]
