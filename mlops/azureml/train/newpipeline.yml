@@ -1,8 +1,8 @@
 $schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
 type: pipeline
-display_name: decision_tree_training_pipeline
-experiment_name: pima-classification-training
-description: Training Pipeline to predict diabetes using Decision Tree classifier
+display_name: random_forest_training_pupeline
+experiment_name: userd_cars_sales_predcition
+description: Training Pipeline to predict used cars prices
 
 inputs:
   input:
