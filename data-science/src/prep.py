@@ -12,6 +12,12 @@ def main(args):
     # Load raw data
     df = pd.read_csv(args.input_data)
 
+        # After reading df
+    print("Columns in input data:", df.columns.tolist())
+    if "price" not in df.columns:
+        raise ValueError(f"'price' column not found in input data. Got columns: {df.columns.tolist()}")
+
+
     # Basic cleaning: drop rows with any missing values
     df = df.dropna()
 
