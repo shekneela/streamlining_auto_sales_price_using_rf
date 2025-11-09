@@ -8,11 +8,9 @@ inputs:
   test_data:
     type: uri_folder
   n_estimators:
-    type: string
-    default: "100"
+    type: integer
   max_depth:
-    type: string
-    default: "5"
+    type: integer
   criterion:
     type: string
     default: "squared_error"
