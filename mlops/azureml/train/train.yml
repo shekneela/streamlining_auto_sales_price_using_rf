@@ -13,6 +13,9 @@ inputs:
   max_depth:
     type: integer
     default: 5
+  criterion:               
+    type: string
+    default: squared_error
 outputs:
   model_output:
     type: mlflow_model
