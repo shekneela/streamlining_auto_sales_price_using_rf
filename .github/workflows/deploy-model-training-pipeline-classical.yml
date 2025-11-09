@@ -49,6 +49,7 @@ jobs:
       
     secrets:
       creds: ${{secrets.AZURE_CREDENTIALS}}
+      
    # 🟦 NEW STEP — Register the train_model component
   register-train-component:
     needs: [get-config, register-environment]
@@ -57,8 +58,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # ✅ Correct Azure CLI setup action
       - name: Set up Azure CLI
-        uses: azure/setup-azure@v3
+        uses: azure/cli@v2
 
       - name: Log in to Azure
         uses: azure/login@v2
@@ -68,6 +70,9 @@ jobs:
       - name: Install Azure ML CLI v2
         run: |
           az extension add -n ml -y || az extension update -n ml
+          az configure --defaults \
+            group=${{ needs.get-config.outputs.resource_group }} \
+            workspace=${{ needs.get-config.outputs.aml_workspace }}
 
       - name: Register train_model component
         run: |
