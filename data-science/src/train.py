@@ -20,6 +20,12 @@ def main(args):
 
     # Load train and test data
     train_df = load_data(args.train_data, "train.csv")
+    print("Training data sample:")
+    print(train_df.head())
+    print("Data types:")
+    print(train_df.dtypes)
+    if "price" not in train_df.columns:
+        raise ValueError("Target column 'price' missing!")
     test_df = load_data(args.test_data, "test.csv")
 
     target_col = "price"
