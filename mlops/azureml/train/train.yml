@@ -8,11 +8,11 @@ inputs:
   test_data:
     type: uri_folder
   n_estimators:
-    type: integer
+    type: number
     default: 100
     optional: true 
   max_depth:
-    type: integer
+    type: number
     default: 5
     optional: true 
   criterion:               
