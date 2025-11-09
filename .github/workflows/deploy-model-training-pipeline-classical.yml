@@ -58,9 +58,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # ✅ Correct Azure CLI setup action
-      - name: Set up Azure CLI
-        uses: azure/cli@v2
+      # ✅ Install Azure CLI locally
+      - name: Install Azure CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y azure-cli
 
       - name: Log in to Azure
         uses: azure/login@v2
