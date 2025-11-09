@@ -26,9 +26,10 @@ jobs:
     code: ../../../data-science/src
     command: >-
       python prep.py 
-      --raw_data ${{inputs.raw_data}} 
-      --train_data ${{outputs.train_data}}
-      --test_data ${{outputs.test_data}}
+      --input_data ${{inputs.raw_data}} 
+      --train_output ${{outputs.train_data}}
+      --test_output ${{outputs.test_data}}
+    
     environment: azureml:used-crs-sales-train-env@latest
     inputs:
       raw_data: ${{parent.inputs.input}}
