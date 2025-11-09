@@ -103,7 +103,7 @@ if __name__ == "__main__":
     parser.add_argument("--train_data", type=str, required=True)
     parser.add_argument("--test_data", type=str, required=True)
     parser.add_argument("--model_output", type=str, required=True)
-    parser.add_argument("--n-estimators", type=int, default=200)
+    parser.add_argument("--n_estimators", type=int, default=200)
     parser.add_argument("--max-depth", type=int, default=None)
     args = parser.parse_args()
     main(args)
